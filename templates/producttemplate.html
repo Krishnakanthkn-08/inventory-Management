@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>
+        PRODUCT MANAGEMENT DETAILS
+        <button type="button" class="btn btn-success pull-right" onclick="showModal()">
+            ADD PRODUCT
+        </button>
+    </h2>
+
+    <table border="1" cellspacing="5" cellpadding="4" class="table table-bordered" id="productTable">
+        <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Product Price</th>
+            <th>Product Quantity</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="productTableBody">
+        <!-- Product rows will be inserted dynamically here -->
+        </tbody>
+    </table>
+
+    <!-- Custom Modal for Add/Edit Product -->
+    <div id="customModal" class="custom-modal">
+        <!-- Your existing modal content here -->
+    </div>
+
+    <script>
+        // Your existing JavaScript code here
+    </script>
+{% endblock %}

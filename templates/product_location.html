@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assign Product Location</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+    <style>
+        /* Full height and remove default margins */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Animated background and flex centering */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(-45deg, #f6d365, #fda085, #fbc2eb, #a6c1ee);
+            background-size: 400% 400%;
+            animation: animatedBackground 12s ease infinite;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        @keyframes animatedBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Centered form container */
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h2 {
+            color: #004085;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #004085;
+            border-color: #004085;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #002c5a;
+            border-color: #002c5a;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Assign Warehouse Location</h2>
+    <form action="{{ url_for('add_location') }}" method="POST">
+        <div class="form-group mb-3">
+            <label for="product_id">Select Product:</label>
+            <select class="form-control" name="product_id" required>
+                {% for product in products %}
+                    <option value="{{ product.id }}">{{ product.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group mb-3">
+            <label for="location">Enter Location:</label>
+            <input type="text" class="form-control" name="location" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Add Location</button>
+    </form>
+</div>
+</body>
+</html>

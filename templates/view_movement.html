@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Movements</title>
+</head>
+<body>
+    <h1>Movement List</h1>
+    <ul>
+        {% for movement in movements %}
+        <li>Product ID: {{ movement.product_id }} - From: {{ movement.from_location }} - To: {{ movement.to_location }} - Quantity: {{ movement.quantity }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('add_movement') }}">Add New Movement</a>
+</body>
+</html>

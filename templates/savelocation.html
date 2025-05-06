@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Management - Add Product Movement</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #c850c0, #4158d0, #0099f7, #43e97b);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #343a40;
+            font-weight: 700;
+        }
+
+        .table {
+            margin-top: 30px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .modal-content {
+            border-radius: 12px;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+            font-weight: 600;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-primary {
+            font-weight: 600;
+        }
+
+        .btn-warning, .btn-danger {
+            font-size: 0.875rem;
+            padding: 4px 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="text-center mb-4">
+        <h1>Add Product Movement</h1>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#locationModal">Add Movement</button>
+    </div>
+
+    <table class="table table-bordered table-striped text-center" id="locationTable">
+        <thead class="table-dark">
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>From Location</th>
+                <th>To Location</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="locationTableBody">
+        </tbody>
+    </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="locationModalLabel">Add Product Movement</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            onclick="clearForm()"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="locationForm">
+                        <div class="mb-3">
+                            <label for="productName" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="productName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fromLocation" class="form-label">From Location</label>
+                            <input type="text" class="form-control" id="fromLocation">
+                        </div>
+                        <div class="mb-3">
+                            <label for="toLocation" class="form-label">To Location</label>
+                            <input type="text" class="form-control" id="toLocation">
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" required>
+                        </div>
+                        <input type="hidden" id="editingRowIndex">
+                        <button type="button" class="btn btn-primary w-100" onclick="saveLocation()">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JS -->
+<script>
+    let counter = 1;
+
+    function clearForm() {
+        document.getElementById('locationForm').reset();
+        document.getElementById('editingRowIndex').value = '';
+    }
+
+    function saveLocation() {
+        const productName = document.getElementById('productName').value.trim();
+        const fromLocation = document.getElementById('fromLocation').value.trim();
+        const toLocation = document.getElementById('toLocation').value.trim();
+        const quantity = document.getElementById('quantity').value.trim();
+        const rowIndex = document.getElementById('editingRowIndex').value;
+
+        if (!productName || !quantity) {
+            alert("Product name and quantity are required.");
+            return;
+        }
+
+        if (!fromLocation && !toLocation) {
+            alert("At least one of From Location or To Location must be filled.");
+            return;
+        }
+
+        const productId = "LOCT" + String(counter).padStart(3, '0');
+        const table = document.getElementById("locationTableBody");
+
+        if (rowIndex) {
+            const row = table.rows[rowIndex];
+            row.cells[1].innerText = productName;
+            row.cells[2].innerText = fromLocation || '-';
+            row.cells[3].innerText = toLocation || '-';
+            row.cells[4].innerText = quantity;
+        } else {
+            const row = table.insertRow();
+            row.innerHTML = `
+                <td>${productId}</td>
+                <td>${productName}</td>
+                <td>${fromLocation || '-'}</td>
+                <td>${toLocation || '-'}</td>
+                <td>${quantity}</td>
+                <td>
+                    <button class="btn btn-warning btn-sm" onclick="editLocation(this)">Edit</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteLocation(this)">Delete</button>
+                </td>
+            `;
+            counter++;
+        }
+
+        const modal = bootstrap.Modal.getInstance(document.getElementById('locationModal'));
+        modal.hide();
+        clearForm();
+    }
+
+    function editLocation(button) {
+        const row = button.closest("tr");
+        const index = row.rowIndex - 1;
+
+        document.getElementById("productName").value = row.cells[1].innerText;
+        document.getElementById("fromLocation").value = row.cells[2].innerText === '-' ? '' : row.cells[2].innerText;
+        document.getElementById("toLocation").value = row.cells[3].innerText === '-' ? '' : row.cells[3].innerText;
+        document.getElementById("quantity").value = row.cells[4].innerText;
+        document.getElementById("editingRowIndex").value = index;
+
+        const modal = new bootstrap.Modal(document.getElementById('locationModal'));
+        modal.show();
+    }
+
+    function deleteLocation(button) {
+        if (confirm("Are you sure you want to delete this movement entry?")) {
+            const row = button.closest("tr");
+            row.remove();
+        }
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

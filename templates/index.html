@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Management Web Application</title>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <style>
+        /* General Styles */
+        body {
+            background: linear-gradient(120deg, #a1c4fd, #c2e9fb, #fbc2eb, #a6c1ee);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            min-height: 100vh;
+            margin: 0;
+        }
+    
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+    
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            text-transform: uppercase;
+        }
+    
+        h2 {
+            font-size: 2rem;
+            color: #4b5563;
+            margin-bottom: 40px;
+        }
+    
+        .well {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+        }
+    
+        /* Button Styles */
+        .btn-main {
+            font-size: 18px;
+            padding: 15px 30px;
+            text-align: center;
+            margin: 10px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+        }
+    
+        .btn-primary {
+            background: linear-gradient(135deg, #4CAF50, #81C784);
+            border: none;
+            color: white;
+        }
+    
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #388E3C, #66BB6A);
+            transform: translateY(-5px);
+        }
+    
+        .btn-success {
+            background: linear-gradient(135deg, #FF8C00, #FFD54F);
+            border: none;
+            color: white;
+        }
+    
+        .btn-success:hover {
+            background: linear-gradient(135deg, #FB8C00, #FFEB3B);
+            transform: translateY(-5px);
+        }
+    
+        .btn-info {
+            background: linear-gradient(135deg, #03A9F4, #64B5F6);
+            border: none;
+            color: white;
+        }
+    
+        .btn-info:hover {
+            background: linear-gradient(135deg, #0288D1, #42A5F5);
+            transform: translateY(-5px);
+        }
+    
+        .btn-danger {
+            background: linear-gradient(135deg, #F44336, #FF7043);
+            border: none;
+            color: white;
+        }
+    
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #D32F2F, #FF5722);
+            transform: translateY(-5px);
+        }
+    
+        .btn-secondary {
+            background: linear-gradient(135deg, #9E9E9E, #BDBDBD);
+            border: none;
+            color: white;
+        }
+    
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #616161, #9E9E9E);
+            transform: translateY(-5px);
+        }
+    
+        .btn-main:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    
+</head>
+<body>
+<div class="container">
+    <div class="well text-center">
+        <h1>Inventory Management Web Application</h1>
+    </div>
+
+    <h2 class="text-center">
+        Main Menu
+    </h2>
+
+    <div class="text-center">
+        <!-- Link to Product Management Page -->
+        <a href="/product" class="btn btn-primary btn-main">Product Management</a>
+        <a href="/location" class="btn btn-success btn-main">Location Management</a>
+        <a href="/movement" class="btn btn-info btn-main">Movement Management</a>
+        <a href="/report" class="btn btn-info btn-main">report</a>
+      
+
+</div>
+</body>
+</html>
